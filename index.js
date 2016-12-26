@@ -152,10 +152,12 @@ var appServer = function(config) {
 		};
 		server_files(server_dir).forEach(function(file) {
 			file = fs.realpathSync( path.join(server_dir,file) );
-			self.log("   Loaded "+file);
-			var func = require(file);
-			if (typeof func=="function") {
-				func(self.express, self);
+			if (file.indexOf('map') < 0){
+				self.log("   Loaded "+file);
+				var func = require(file);
+				if (typeof func=="function") {
+					func(self.express, self);
+				}
 			}
 		});
 	};
